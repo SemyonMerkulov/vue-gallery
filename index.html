@@ -10,7 +10,7 @@
     <h1 class="title">Unsplash Photos</h1>
     <section class="grid">
       <div class="grid__item card" v-for="photo in photos">
-        <div class="card__body">
+        <div class="card__body" @click="openFullscreen(photo.urls.regular)">
           <img :src="photo.urls.small" alt="">        
         </div>
         <div class="card__footer media">
@@ -21,7 +21,21 @@
         </div>
       </div>
     </section>
+    <fullscreen 
+      v-show="activeFullscreen" 
+      v-on:close="closeFullscreen"
+      v-bind:photo="fullPhotoLink"> 
+    </fullscreen>  
 	</div>
+  <template id="fullscreen">
+      <div class="fullscreen__overlay">
+        <button class="fullscreen__btn-close" @click="close">✖</button>
+        <div class="fullscreen__inner">
+          <img :src="photo" alt="" class="fullscreen__photo">
+          <div class="fullscreen__comments"></div>
+        </div>
+      </div>
+    </template>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script src="app.js"></script>
