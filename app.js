@@ -7,6 +7,9 @@ Vue.component('fullscreen', {
 		close: function() {
 			this.$emit('close');
 		}
+	},
+	beforeUpdate: function() {
+		console.log("Loading image...")
 	}
 })
 
@@ -47,6 +50,9 @@ new Vue({
 			this.activeFullscreen = false;
 			document.body.style.overflow = 'auto';
 		}
+	},
+	beforeCreate: function() {
+		console.log("Loading...")
 	},
 	created: function() {
 		this.fetchPhotos(this.currentPage)
