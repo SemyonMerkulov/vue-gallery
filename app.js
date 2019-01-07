@@ -11,7 +11,41 @@ Vue.component('fullscreen', {
 	beforeUpdate: function() {
 		console.log("Loading image...")
 	}
-})
+});
+
+Vue.component('pagination', {
+	template: '#pagination',
+	props: {
+		current: {
+			type: Number,
+			default: 1
+		},
+		total: {
+			type: Number,
+			default: 0
+		},
+		perPage: {
+			type: Number,
+			default: 9
+		}
+	},
+	computed: {
+		totalPages: function() {
+			return Math.ceil(this.total/this.perPage)	
+		},
+		nextPage: function() {
+			return this.current + 1
+		},
+		prevPage: function() {
+			return this.current - 1
+		}
+	},
+	methods: {
+		changePage: function(page) {
+			this.$emit('page-changed', page)
+		}
+	}
+});
 
 new Vue({
 	el: '#app',

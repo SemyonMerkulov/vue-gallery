@@ -21,6 +21,12 @@
         </div>
       </div>
     </section>
+    <pagination 
+      v-bind:current="currentPage" 
+      v-bind:total="totalPhotos" 
+      v-bind:perPage="perPage" 
+      @page-changed="fetchPhotos">    
+    </pagination>        
     <fullscreen 
       v-show="activeFullscreen" 
       v-on:close="closeFullscreen"
@@ -28,14 +34,23 @@
     </fullscreen>  
 	</div>
   <template id="fullscreen">
-      <div class="fullscreen__overlay">
-        <button class="fullscreen__btn-close" @click="close">✖</button>
-        <div class="fullscreen__inner">
-          <img :src="photo" alt="" class="fullscreen__photo">
-          <div class="fullscreen__comments"></div>
-        </div>
+    <div class="fullscreen__overlay">
+      <button class="fullscreen__btn-close" @click="close">✖</button>
+      <div class="fullscreen__inner">
+        <img :src="photo" alt="" class="fullscreen__photo">
+        <div class="fullscreen__comments"></div>
       </div>
-    </template>
+    </div>
+  </template>
+  <template id="pagination">
+    <div class="pagination">
+      <button class="pagination__btn" @click="changePage(prevPage)">Prev</button>
+      <div class="pagination__mid">
+        <span>{{ current }} of {{ totalPages }}</span>
+      </div>
+      <button class="pagination__btn" @click="changePage(nextPage)">Next</button>
+    </div>
+  </template>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script src="app.js"></script>
