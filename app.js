@@ -42,12 +42,18 @@ Vue.component('pagination', {
 	},
 	methods: {
 		changePage: function(page) {
-			this.$emit('page-changed', page)
-		}
+			this.$emit('page-changed', page);
+		},
+		hasPrev: function() {
+	      return this.current > 1
+	    },
+	    hasNext: function() {
+	      return this.current < this.totalPages
+	    }
 	}
 });
 
-new Vue({
+var app = new Vue({
 	el: '#app',
 	data: {
 		activeFullscreen: false,
@@ -70,6 +76,8 @@ new Vue({
 				.then(response => {
 					console.log(response)
 					this.photos = response.data
+					this.totalPhotos = parseInt(response.headers["x-total"])
+					this.currentPage = page
 				})
 				.catch(error => {
 				    console.log(error)
@@ -92,3 +100,10 @@ new Vue({
 		this.fetchPhotos(this.currentPage)
 	}
 })
+
+document.addEventListener('keyup', function(e) {
+  if (e.keyCode === 27 && app.activeFullscreen) {
+    app.activeFullscreen = false;
+    document.body.style.overflow = 'auto';
+  }
+});

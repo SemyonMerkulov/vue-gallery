@@ -19,12 +19,12 @@
             <a :href="photo.user.portfolio_url" target="_blank">{{ photo.user.name }}</a>
           </div>
         </div>
-      </div>
+      </div>  
     </section>
     <pagination 
-      v-bind:current="currentPage" 
-      v-bind:total="totalPhotos" 
-      v-bind:perPage="perPage" 
+      :current="currentPage"
+      :total="totalPhotos"
+      :per-page="perPage"
       @page-changed="fetchPhotos">    
     </pagination>        
     <fullscreen 
@@ -44,11 +44,11 @@
   </template>
   <template id="pagination">
     <div class="pagination">
-      <button class="pagination__btn" @click="changePage(prevPage)">Prev</button>
+      <button class="pagination__btn pagination__btn_prev" v-show="hasPrev()" @click="changePage(prevPage)">Prev</button>
       <div class="pagination__mid">
-        <span>{{ current }} of {{ totalPages }}</span>
+        {{ current }} of {{ total }}
       </div>
-      <button class="pagination__btn" @click="changePage(nextPage)">Next</button>
+      <button class="pagination__btn pagination__btn_next" v-show="hasNext()" @click="changePage(nextPage)">Next</button>
     </div>
   </template>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
