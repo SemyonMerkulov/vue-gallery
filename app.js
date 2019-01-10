@@ -1,15 +1,32 @@
 var appId = 'd6d78c3b896ec7c3f7538ea857d363f3474b7f13caba938c19b1c611d175fdd6';
 
 Vue.component('fullscreen', {
+	data: function() {
+		return {
+			showPreloader: true
+		}
+	},
 	props: ['photo'],
 	template: '#fullscreen',
 	methods: {
 		close: function() {
 			this.$emit('close');
+		},
+		photoLoading: function() {
+			var img = new Image() ;
+		    img.src = this.photo;
+		    img.className = "fullscreen__photo"
+		    img.onload = () => {
+		    	var elem = document.getElementById('fullscreen__inner');
+		     	elem.appendChild(img);
+		     	elem.classList.add('fullscreen__inner_loaded');
+		     	this.showPreloader = false;
+		    };
+
 		}
 	},
-	beforeUpdate: function() {
-		console.log("Loading image...")
+	created: function() {
+		this.photoLoading();
 	}
 });
 
@@ -86,15 +103,10 @@ var app = new Vue({
 		openFullscreen: function(url) {
 			this.activeFullscreen = true;
 			this.fullPhotoLink = url;
-			document.body.style.overflow = 'hidden';
 		},
 		closeFullscreen: function() {
 			this.activeFullscreen = false;
-			document.body.style.overflow = 'auto';
 		}
-	},
-	beforeCreate: function() {
-		console.log("Loading...")
 	},
 	created: function() {
 		this.fetchPhotos(this.currentPage)
