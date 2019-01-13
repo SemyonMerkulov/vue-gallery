@@ -21,6 +21,7 @@
         </div>
       </div>  
     </section>
+
     <pagination 
       :current="currentPage"
       :total="totalPhotos"
@@ -29,10 +30,11 @@
     </pagination>        
     <fullscreen 
       v-if="activeFullscreen" 
-      v-on:close="closeFullscreen"
-      v-bind:photo="fullPhotoLink"> 
+      @close="closeFullscreen"
+      :photo="fullPhotoLink"> 
     </fullscreen>  
 	</div>
+
   <template id="fullscreen">
     <div class="fullscreen__overlay">
       <div class="fullscreen__inner" id="fullscreen__inner">
@@ -42,15 +44,17 @@
       <button class="fullscreen__btn-close" @click="close">✖</button>
     </div>
   </template>
+
   <template id="pagination">
     <div class="pagination">
       <button class="pagination__btn pagination__btn_prev" v-show="hasPrev()" @click="changePage(prevPage)">Prev</button>
       <div class="pagination__mid">
-        {{ current }} of {{ total }}
+        {{ current }} of {{ totalPages }}
       </div>
       <button class="pagination__btn pagination__btn_next" v-show="hasNext()" @click="changePage(nextPage)">Next</button>
     </div>
   </template>
+
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script src="app.js"></script>
